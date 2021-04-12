@@ -30,11 +30,11 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return x == position.x && y == position.y;
+        return this.hashCode() == position.hashCode();
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return x * 10000 + y;
     }
 }

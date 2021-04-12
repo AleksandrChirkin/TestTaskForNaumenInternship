@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Router implements RouteFinder{
     @Override
     public char[][] findRoute(char[][] map){
         LinkedBlockingQueue<Position> queue = new LinkedBlockingQueue<>();
-        ArrayList<Position> visited = new ArrayList<>();
+        HashSet<Position> visited = new HashSet<>();
         Position start = getPosition(map, '@');
         queue.add(start);
         Position end = getPosition(map, 'X');
