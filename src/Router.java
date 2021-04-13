@@ -1,7 +1,12 @@
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/*** Класс поиска маршрута (реализует {@link RouteFinder}) */
 public class Router implements RouteFinder{
+    /** Реализация метода поиска кратчайшего пяти
+     * @param map карта
+     * @return карта с построенным маршрутом или null, если его нет
+     */
     @Override
     public char[][] findRoute(char[][] map){
         LinkedBlockingQueue<Position> queue = new LinkedBlockingQueue<>();
@@ -41,6 +46,11 @@ public class Router implements RouteFinder{
         return null;
     }
 
+    /** Находит на карте соответствующий символ и возвращает его позицию
+     * @param map карта
+     * @param symbol символ
+     * @return позиция символа
+     */
     private Position getPosition(char[][] map, char symbol){
         for (int i=0; i < map.length; i++)
             for (int j=0; j < map[i].length; j++)
@@ -49,10 +59,22 @@ public class Router implements RouteFinder{
         throw new IllegalArgumentException("No such position!");
     }
 
+    /** Проверяет, является ли данная позиция доступной (т.е. она в рамках картах и в ней нет стены)
+     * @param map карта
+     * @param x положение на оси абсцисс
+     * @param y положение на оси ординат
+     * @return является ли позиция доступной?
+     */
     private boolean isMoveCorrect(char[][] map, int x, int y) {
         return y >= 0 && y < map.length && x >= 0 && x < map[y].length && map[y][x] != '#';
     }
 
+    /** Отображает на карте путь
+     * @param map карта
+     * @param beginPos начальная позиция
+     * @param currentPosition позиция, предшествующая концу
+     * @return карта с отображенным на ней путем
+     */
     private char[][] getMapWithPath(char[][] map, Position beginPos, Position currentPosition){
         while (!currentPosition.equals(beginPos)){
             map[currentPosition.getY()][currentPosition.getX()] = '+';
@@ -61,6 +83,13 @@ public class Router implements RouteFinder{
         return map;
     }
 
+    /**
+     * @param map карта
+     * @param x положение на оси абсцисс
+     * @param y положение на оси ординат
+     * @param number количество посещений данной позицции
+     * @return достигнуто ли максимальное количество посещений
+     */
     private boolean reachesMaxNumberOfNeighbors(char[][] map, int x, int y, int number){
         int maxNumber = 0;
         for (int i=-1; i <= 1; i++)
